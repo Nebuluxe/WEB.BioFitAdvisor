@@ -1,0 +1,165 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+for details on configuring this project to bundle and minify static web assets. */
+
+a.navbar-brand {
+  white-space: normal;
+  text-align: center;
+  word-break: break-all;
+}
+
+a {
+  color: #0077cc;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.border-top {
+  border-top: 1px solid #e5e5e5;
+}
+.border-bottom {
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+button.accept-policy {
+  font-size: 1rem;
+  line-height: inherit;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  white-space: nowrap;
+  line-height: 60px;
+}
+
+#side-menu {
+    float: left;
+    width: 200px;
+    height: 100vh;
+    background: #1a1a1a;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,.2) !important;
+    transition: border-color 0.3s ease;
+    z-index: 9999 !important;
+    position: fixed;
+    padding-bottom: 20px;
+    transition: width 0.3s ease, transform 0.3s ease;
+    overflow: hidden;
+}
+
+#side-menu a{
+    color: white;
+    text-decoration: none;
+}
+
+#side-menu ul {
+    padding: 0;
+}
+
+#side-menu .fw-normal li a {
+    width: 100%;
+    display: block;
+}
+
+#side-menu .fw-normal li {
+    padding-left: 15px;
+    padding-bottom: 3px;
+}
+
+#side-menu .fw-normal li:hover {
+    background: rgb(49, 49, 49)
+}
+
+#side-menu button {
+    color: white;
+    padding: 0;
+    padding-left: 10px;
+    width: 100%;
+    text-align: left;
+    box-shadow: none;
+    /*border-bottom: 1px solid #3c3c3c;*/
+    border-radius: 0 !important;
+    padding-bottom: 5px;
+}
+
+    #side-menu .collapse ul {
+        /*background: #262626;*/
+        margin-left: 10px;
+        margin-right: 10px;
+        border-radius: 10px;
+    }
+
+button:focus {
+    outline: none !important;
+}
+
+.btn-toggle {
+    display: inline-flex;
+    align-items: center;
+    padding: .25rem .5rem;
+    font-weight: 600;
+    color: rgba(0, 0, 0, .65);
+    background-color: transparent;
+    border: 0;
+}
+
+    .btn-toggle::before {
+        width: 1.25em;
+        line-height: 0;
+        content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
+        transition: transform .35s ease;
+        transform-origin: .5em 50%;
+    }
+
+.btn-toggle[aria-expanded="true"] {
+    color: rgba(0, 0, 0, .85);
+}
+
+.btn-toggle[aria-expanded="true"]::before {
+    transform: rotate(90deg);
+}
+
+#userAccount {
+    float: right;
+    margin: 15px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    z-index: 9999;
+    position: fixed;
+    right: 0px;
+}
+
+#userAccount .user-image {
+    width: 40px;
+    height: 40px;
+    background: black;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,.2) !important;
+}
+
+#userAccount .user-name {
+    background: #0000005e;
+    color: white;
+    padding: 2px;
+    border-radius: 5px;
+    right: -10px;
+    position: relative;
+    padding-right: 15px;
+    padding-left: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,.2) !important;
+}

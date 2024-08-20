@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WEB.BioFitAdvisor.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui.css"   />
+</head>
+<body>
+    <div id="userAccount">
+        <div class="user-name">
+            Joaquin Diaz
+        </div>
+        <div class="user-image">
+
+        </div>
+    </div>
+    <div id="side-menu">
+        <div class="flex-shrink-0" style="height: 100%;">
+            <a href="/WebSite/index" class="d-flex align-items-center link-dark text-decoration-none" style="padding: 5px;background-color: #262626;margin: 10px;border-radius: 10px; padding-left: 15px;">
+                <img src="/webSite/img/icons/body-fit-advisot-white.png" width="25" height="25" />
+                <span style="margin-left: 7px; font-size: 16px;font-weight: 600;">BodyFit Advisor</span>
+            </a>
+            <ul class="list-unstyled ps-0 mb-auto" style="margin: 0;">
+                <li >
+                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="true">
+                        Dashboard
+                    </button>
+                    <div class="collapse show" id="dashboard-collapse">
+                        <ul class="btn-toggle-nav fw-normal small">
+                            <li><a href="#" class="link-dark rounded">Overview</a></li>
+                            <li><a href="#" class="link-dark rounded">Weekly</a></li>
+                            <li><a href="#" class="link-dark rounded">Monthly</a></li>
+                            <li><a href="#" class="link-dark rounded">Annually</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li >
+                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
+                        Agenda
+                    </button>
+                    <div class="collapse" id="home-collapse">
+                        <ul class="btn-toggle-nav fw-normal small">
+                            <li><a href="#" class="link-dark rounded">Overview</a></li>
+                            <li><a href="#" class="link-dark rounded">Updates</a></li>
+                            <li><a href="#" class="link-dark rounded">Reports</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li >
+                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
+                        Rutinas
+                    </button>
+                    <div class="collapse" id="orders-collapse">
+                        <ul class="btn-toggle-nav fw-normal small">
+                            <li><a href="#" class="link-dark rounded">New</a></li>
+                            <li><a href="#" class="link-dark rounded">Processed</a></li>
+                            <li><a href="#" class="link-dark rounded">Shipped</a></li>
+                            <li><a href="#" class="link-dark rounded">Returned</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li >
+                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
+                        Cuenta
+                    </button>
+                    <div class="collapse" id="account-collapse">
+                        <ul class="btn-toggle-nav fw-normal small">
+                            <li><a href="#" class="link-dark rounded">Perfil</a></li>
+                            <li><a href="#" class="link-dark rounded">Ajustes</a></li>
+                            <li><a href="#" class="link-dark rounded">Cerrar sesion</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/echarts/echarts.min.js"></script>
+    <script src="~/lib/fullcalendar/index.global.js"></script>
+    <script src="~/lib/fullcalendar/locale/es.global.js"></script>
+    <script src="~/lib/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

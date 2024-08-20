@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <title>Login</title>
+
+  <link rel="stylesheet" href="~/webSite/css/maicons.css">
+  <link rel="shortcut icon" href="~/webSite/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="~/webSite/css/Login/Auth.css">
+</head>
+<body>
+	<a class="home-button" href="/WebSite/index"><span class="mai-home"></span></a>
+	<div class="container" id="container">
+		<div class="form-container sign-up-container">
+			<form action="#">
+				<h1>Acceder</h1>
+				<input type="text" placeholder="RutDNI" id="txtComRytDNI" />
+				<input type="email" placeholder="Email" id="txtComEmail" />
+				<input type="password" placeholder="Password" id="txtComPass" />
+				<a href="#">¿Olvidaste tu contraseña?</a>
+				<button id="btnComLogIn">Ingresar</button>
+			</form>
+		</div>
+		<div class="form-container sign-in-container">
+			<form action="#">
+				<div id="formLogin">
+					<h1>Acceder</h1>
+					<input type="email" placeholder="Email" id="txtUserEmail" />
+					<input type="password" placeholder="Password" id="txtUserPass" />
+					<a href="#">¿Olvidaste tu contraseña?</a>
+					<button id="btnUserLogIn">Ingresar</button>
+				</div>
+				<div id="formSelectCompany" class="hide">
+					<h3>Seleccione su gimnacio</h3>
+					<select id="cboCompaniesUser">
+
+					</select>
+					<button id="btnSelectCompany">Seleccionar</button>
+				</div>
+			</form>
+		</div>
+		<div class="overlay-container">
+			<div class="overlay">
+				<div class="overlay-panel overlay-left">
+					<h1>¡Hola!</h1>
+					<p>Ingresa los detalles de tu empresa para acceder a tu cuenta corporativa</p>
+					<button class="ghost" id="signIn">Ingresar como cliente</button>
+				</div>
+				<div class="overlay-panel overlay-right">
+					<h1>¡Hola!</h1>
+					<p>Ingresa tu email y contraseña para acceder a tu cuenta personal</p>
+					<button class="ghost" id="signUp">Ingresar como empresa</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/lib/jquery/dist/jquery.min.js"></script>
+	<script src="~/webSite/js/Login/Auth.js"></script>
+	<script src="~/js/site.js"></script>
+</body>
+</html>
