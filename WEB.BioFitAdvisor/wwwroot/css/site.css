@@ -17,8 +17,14 @@ html {
   min-height: 100%;
 }
 
+body span {
+    color: white;
+}
+
 body {
-  margin-bottom: 60px;
+    background-color: #f5f5f5;
+    overflow: hidden;
+    color: white;
 }
 
 /* ======= Toast message ======== */

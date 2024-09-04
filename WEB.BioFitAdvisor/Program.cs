@@ -1,4 +1,5 @@
 using System.Net.NetworkInformation;
+using WEB.BioFitAdvisor.Core; // Asegúrate de que este using esté presente
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,11 @@ builder.Services.AddScoped<Ping>();
 
 builder.Services.AddHttpContextAccessor();
 
-// Configurar CORS para permitir cualquier origen, m?todo y encabezado
+// Registrar ApiConsumer y UserDataManipulator
+builder.Services.AddScoped<ApiConsumer>();
+builder.Services.AddScoped<UserDataManipulator>();
+
+// Configurar CORS para permitir cualquier origen, método y encabezado
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAnyOrigin",
@@ -44,7 +49,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseCors("AllowAnyOrigin"); // Aplicar la pol?tica CORS
+app.UseCors("AllowAnyOrigin"); // Aplicar la política CORS
 
 app.UseAuthorization();
 

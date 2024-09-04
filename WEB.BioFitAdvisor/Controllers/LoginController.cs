@@ -2,6 +2,7 @@
 using API.BioFitAdvisor.Domain.DTO;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Diagnostics;
 using WEB.BioFitAdvisor.Core;
 using WEB.BioFitAdvisor.Models;
@@ -34,18 +35,9 @@ namespace WEB.BioFitAdvisor.Controllers
 
                 if (apiDTO.success)
                 {
-                    if (apiDTO.success)
-                    {
-                        ResponseToken oToken = JsonConvert.DeserializeObject<ResponseToken>(apiDTO.response);
+                    ResponseToken oToken = JsonConvert.DeserializeObject<ResponseToken>(apiDTO.response);
 
-                        _UserDataManipulator.SetUserData(oToken);
-
-                        apiDTO = await _ApiConsumer.GET("/api/User/GetUserCompanies", oToken.token);
-
-                        ListEmpresas = JsonConvert.DeserializeObject<List<UserCompany>>(apiDTO.response) ?? new List<UserCompany>();
-
-                        _UserDataManipulator.SetUserData(oToken);
-                    }
+                    _UserDataManipulator.SetUserData(oToken, true, 0);
                 }
 
                 return Json(new { success = apiDTO.success, userData = _UserDataManipulator.GetUserData(), companies = ListEmpresas });
