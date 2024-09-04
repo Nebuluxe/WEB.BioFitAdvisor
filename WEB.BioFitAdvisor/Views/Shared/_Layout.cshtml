@@ -8,77 +8,71 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WEB.BioFitAdvisor.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui.css"   />
+    <link rel="stylesheet" href="~/webSite/css/maicons.css">
+    <link rel="stylesheet" href="~/lib/datatables/datatables.min.css" />
 </head>
-<body>
-    <div id="userAccount">
-        <div class="user-name">
-            Joaquin Diaz
-        </div>
-        <div class="user-image">
-
-        </div>
-    </div>
-    <div id="side-menu">
-        <div class="flex-shrink-0" style="height: 100%;">
-            <a href="/WebSite/index" class="d-flex align-items-center link-dark text-decoration-none" style="padding: 5px;background-color: #262626;margin: 10px;border-radius: 10px; padding-left: 15px;">
-                <img src="/webSite/img/icons/body-fit-advisot-white.png" width="25" height="25" />
-                <span style="margin-left: 7px; font-size: 16px;font-weight: 600;">BodyFit Advisor</span>
+<body style="background-color: #f5f5f5; overflow: hidden">
+    <div class="d-flex flex-column flex-shrink-0 text-bg-dark sidebar">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 text-white text-decoration-none p-2" style="display: flex !important;justify-content: center;background: #7d20a3;z-index: 10;">
+            <span class="fs-4">BioFit Advisor</span>
+        </a>
+        <ul class="nav nav-pills flex-column mb-auto p-2">
+            <li class="nav-item">
+                <a href="#" class="nav-link active text-white" aria-current="page">
+                    <span class="mai-speedometer" style="font-size: 16px; margin-right: 5px;"></span> Dashboard
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link text-white">
+                    <span class="mai-people" style="font-size: 16px; margin-right: 5px;"></span> Usuarios
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link text-white">
+                    <span class="mai-wallet" style="font-size: 16px; margin-right: 5px;"></span> Suscripciones
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link text-white">
+                    <span class="mai-fitness" style="font-size: 16px; margin-right: 5px;"></span> Rutinas
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link text-white">
+                    <span class="mai-analytics" style="font-size: 16px; margin-right: 5px;"></span> IA Monitor
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link text-white">
+                    <span class="mai-document-text" style="font-size: 16px; margin-right: 5px;"></span> Reportes
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link text-white">
+                    <span class="mai-notifications" style="font-size: 16px; margin-right: 5px;"></span> Notificaciones
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link text-white">
+                    <span class="mai-settings" style="font-size: 16px; margin-right: 5px;"></span> Configuración
+                </a>
+            </li>
+        </ul>
+        <div class="dropdown">
+            <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle p-2" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="https://github.com/mdo.png" alt="" width="32" height="32" class="rounded-circle me-2">
+                <strong>Joaquin Diaz</strong>
             </a>
-            <ul class="list-unstyled ps-0 mb-auto" style="margin: 0;">
-                <li >
-                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="true">
-                        Dashboard
-                    </button>
-                    <div class="collapse show" id="dashboard-collapse">
-                        <ul class="btn-toggle-nav fw-normal small">
-                            <li><a href="#" class="link-dark rounded">Overview</a></li>
-                            <li><a href="#" class="link-dark rounded">Weekly</a></li>
-                            <li><a href="#" class="link-dark rounded">Monthly</a></li>
-                            <li><a href="#" class="link-dark rounded">Annually</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li >
-                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="false">
-                        Agenda
-                    </button>
-                    <div class="collapse" id="home-collapse">
-                        <ul class="btn-toggle-nav fw-normal small">
-                            <li><a href="#" class="link-dark rounded">Overview</a></li>
-                            <li><a href="#" class="link-dark rounded">Updates</a></li>
-                            <li><a href="#" class="link-dark rounded">Reports</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li >
-                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-                        Rutinas
-                    </button>
-                    <div class="collapse" id="orders-collapse">
-                        <ul class="btn-toggle-nav fw-normal small">
-                            <li><a href="#" class="link-dark rounded">New</a></li>
-                            <li><a href="#" class="link-dark rounded">Processed</a></li>
-                            <li><a href="#" class="link-dark rounded">Shipped</a></li>
-                            <li><a href="#" class="link-dark rounded">Returned</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li >
-                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
-                        Cuenta
-                    </button>
-                    <div class="collapse" id="account-collapse">
-                        <ul class="btn-toggle-nav fw-normal small">
-                            <li><a href="#" class="link-dark rounded">Perfil</a></li>
-                            <li><a href="#" class="link-dark rounded">Ajustes</a></li>
-                            <li><a href="#" class="link-dark rounded">Cerrar sesion</a></li>
-                        </ul>
-                    </div>
-                </li>
+            <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                <li><a class="dropdown-item" href="#">Configuración</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
             </ul>
         </div>
     </div>
-    <div class="container">
+
+    <div style="padding: 15px; padding-left: 25px;padding-right: 25px;height: 100vh;overflow: hidden;overflow-y: scroll; background: #1e202f">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -91,6 +85,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/datatables/datatables.min.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

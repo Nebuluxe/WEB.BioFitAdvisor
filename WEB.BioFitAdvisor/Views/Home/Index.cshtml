@@ -3,130 +3,156 @@
 }
 
 <style>
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 20px;
+    *{
+        color: white
     }
-
-    .dashboard-title {
-        text-align: center;
-        margin-bottom: 30px;
-        color: #333;
-    }
-
-    .row {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 20px;
-    }
-
-    .col {
-        flex: 1;
-        min-width: 300px;
-        padding: 15px;
-    }
-
-    .card {
-        background-color: #fff;
-        border-radius: 15px;
-        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        text-align: center;
-        color: #fff;
-        background: linear-gradient(135deg, #6b73ff 0%, #000dff 100%);
-    }
-
-    .card-title {
-        font-size: 20px;
+    .chart-container {
         margin-bottom: 10px;
-        color: #fff;
-    }
-
-    .card-value {
-        font-size: 36px;
-        font-weight: bold;
-    }
-
-    #chart1, #chart2, #chart3, #chart4, #chart5 {
+        box-shadow: 0px 8px 28px -9px rgba(0,0,0,0.15);
+        padding: 10px;
+        background: #292a3e;
+        border-radius: 0;
         width: 100%;
-        height: 400px;
-        margin-top: 20px;
+        height: 300px;
     }
 
-    .footer {
-        text-align: center;
-        margin-top: 50px;
-        color: #777;
+    .card{
+        border: 0;
+        box-shadow: 0px 8px 28px -9px rgba(0,0,0,0.15);
+        border-radius: 0;
+        height: 146px;
     }
 
-    .progress-bar {
-        height: 10px;
-        border-radius: 5px;
-        background-color: #4caf50;
-        overflow: hidden;
-        margin-top: 15px;
+    .card-header{
+        border: 0;
+        background: #610588;
+        color: white;
+        border-radius: 0 !important;
     }
 
-    .progress-bar-inner {
-        height: 100%;
-        background-color: #00e676;
-        width: 75%; /* Example dynamic value */
+    .card-body{
+        background: #292a3e;
     }
 </style>
 
-<div class="container">
+<div>
     <div class="row">
-        <div class="col">
-            <div class="card">
-                <div class="card-title">Total Workouts</div>
-                <div class="card-value">120</div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card">
-                <div class="card-title">Calories Burned</div>
-                <div class="card-value">3500 kcal</div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card">
-                <div class="card-title">Active Days</div>
-                <div class="card-value">28</div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card">
-                <div class="card-title">Sleep Quality</div>
-                <div class="card-value">85%</div>
-                <div class="progress-bar">
-                    <div class="progress-bar-inner"></div>
+        <div class="col-lg-12">
+            <div class="row">
+                <!-- Card 1 -->
+                <div class="col-lg-2" style="padding: 0;padding-right: 10px;">
+                    <div class="card text-bg-primary mb-2">
+                        <div class="card-header">Ventas</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Total de Ingresos</h5>
+                            <p class="card-text">120,000 USD</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="col-lg-2" style="padding: 0;padding-right: 10px;">
+                    <div class="card text-bg-success mb-2">
+                        <div class="card-header">Clientes</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Nuevos Clientes</h5>
+                            <p class="card-text">450</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="col-lg-2" style="padding: 0;padding-right: 10px;">
+                    <div class="card text-bg-warning mb-2">
+                        <div class="card-header">Pendientes</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Órdenes Pendientes</h5>
+                            <p class="card-text">15</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="col-lg-2" style="padding: 0;padding-right: 10px;">
+                    <div class="card text-bg-danger mb-2">
+                        <div class="card-header">Errores</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Errores de Sistema</h5>
+                            <p class="card-text">3</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="col-lg-2" style="padding: 0;padding-right: 10px;">
+                    <div class="card text-bg-info mb-2">
+                        <div class="card-header">Trafico</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Visitas al Sitio</h5>
+                            <p class="card-text">32,000</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="col-lg-2" style="padding: 0;padding-right: 0px;">
+                    <div class="card text-bg-light mb-2">
+                        <div class="card-header">Comentarios</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Nuevos Comentarios</h5>
+                            <p class="card-text">25</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col">
-            <div id="chart1"></div>
+        <div class="col-lg-7">
+            <!-- Contenedor para gráficos -->
+            <div class="row">
+                <div class="col-lg-6" style="padding: 0; padding-right: 10px;">
+                    <div id="chartContainer" class="chart-container" ></div>
+                </div>
+                <div class="col-lg-6" style="padding: 0; padding-right: 10px;">
+                    <div id="chartContainer2" class="chart-container" ></div>
+                </div>
+                <div class="col-lg-6" style="padding: 0; padding-right: 10px;">
+                    <div id="chartContainer3" class="chart-container" ></div>
+                </div>
+                <div class="col-lg-6" style="padding: 0; padding-right: 10px;">
+                    <div id="chartContainer4" class="chart-container" ></div>
+                </div>
+            </div>
         </div>
-    </div>
 
-    <div class="row">
-        <div class="col">
-            <div id="chart2"></div>
+        <div class="col-lg-5" style="padding: 0;">
+            <div id="worldMapChart" class="chart-container" style="height: 98%;"></div>
         </div>
-        <div class="col">
-            <div id="chart3"></div>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col">
-            <div id="chart4"></div>
-        </div>
-        <div class="col">
-            <div id="chart5"></div>
+        <div class="col-lg-12" style="box-shadow: 0px 8px 28px -9px rgba(0,0,0,0.15);background: #292a3e;border-radius: 0;">
+            <!-- Tabla para datos de suscripciones -->
+            <h5>Detalles de Suscripciones</h5>
+            <table id="subscriptionTable" class="display" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Nombre del Usuario</th>
+                        <th>Tipo de Suscripción</th>
+                        <th>Fecha de Inicio</th>
+                        <th>Fecha de Expiración</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Datos de ejemplo; en producción, llenar dinámicamente -->
+                    <tr>
+                        <td>Juan Pérez</td>
+                        <td>Premium</td>
+                        <td>2023-01-10</td>
+                        <td>2024-01-10</td>
+                        <td>Activo</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

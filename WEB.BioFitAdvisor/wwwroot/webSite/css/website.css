@@ -1,5 +1,5 @@
 /**
- * Mobster v1.0.0
+ * website v1.0.0
  * Copyright 2020 by MACode ID
  * Site: www.macodeid.com
  * License under CC 4.0 ()
@@ -2130,14 +2130,6 @@ hr {
   }
 }
 
-
-
-
-
-
-
-
-
 .page-hero-section {
   position: relative;
   height: 100vh;
@@ -2154,9 +2146,9 @@ hr {
 
 
 .page-section {
-  position: relative;
-  padding-top: 100px;
-  padding-bottom: 100px;
+    position: relative;
+    padding-top: 100px;
+    padding-bottom: 100px;
 }
 
 .page-section:not(.fg-white) h1,
@@ -2248,7 +2240,7 @@ hr {
 }
 
 .hero-home-1 {
-    background-image: url(/webSite/img/bg_hero_1.svg) !important;
+    background-image: url(/webSite/img/bg_hero_1.png) !important;
 }
 
 .hero-home-2 {
@@ -2295,11 +2287,11 @@ hr {
 }
 
 .hero-mini {
-    background-image: url(/webSite/img/hero_mini.svg);
+    background-image: url(/webSite/img/hero_mini.png);
 }
 
 .hero-mini {
-    height: 462px;
+    height: 470px;
 }
 
 .card-page {

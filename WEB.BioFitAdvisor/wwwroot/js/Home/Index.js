@@ -1,179 +1,200 @@
-﻿var chart1 = echarts.init(document.getElementById('chart1'));
-var chart2 = echarts.init(document.getElementById('chart2'));
-var chart3 = echarts.init(document.getElementById('chart3'));
-var chart4 = echarts.init(document.getElementById('chart4'));
-var chart5 = echarts.init(document.getElementById('chart5'));
+﻿$(function () {
+    // Inicializa DataTable
+    $('#subscriptionTable').DataTable();
 
-var option1 = {
-    title: {
-        text: 'Monthly Workout Frequency',
-        left: 'center',
-        textStyle: {
-            color: '#fff'
-        }
-    },
-    xAxis: {
-        type: 'category',
-        data: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-        axisLine: {
-            lineStyle: {
-                color: '#fff'
-            }
-        }
-    },
-    yAxis: {
-        type: 'value',
-        axisLine: {
-            lineStyle: {
-                color: '#fff'
-            }
-        }
-    },
-    series: [{
-        data: [20, 25, 30, 35],
-        type: 'bar',
-        color: '#6b73ff'
-    }]
-};
+    // Inicializa los gráficos de eCharts
+    var myChart = echarts.init(document.getElementById('chartContainer'));
+    var myChart2 = echarts.init(document.getElementById('chartContainer2'));
+    var myChart3 = echarts.init(document.getElementById('chartContainer3'));
+    var heatmapChart = echarts.init(document.getElementById('chartContainer4'));
+    var worldMapChart = echarts.init(document.getElementById('worldMapChart'));
 
-var option2 = {
-    title: {
-        text: 'Calories Burned Per Week',
-        left: 'center',
-        textStyle: {
-            color: '#fff'
-        }
-    },
-    xAxis: {
-        type: 'category',
-        data: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-        axisLine: {
-            lineStyle: {
-                color: '#fff'
-            }
-        }
-    },
-    yAxis: {
-        type: 'value',
-        axisLine: {
-            lineStyle: {
-                color: '#fff'
-            }
-        }
-    },
-    series: [{
-        data: [800, 900, 950, 850],
-        type: 'line',
-        smooth: true,
-        color: '#00e676'
-    }]
-};
+    // Paleta de colores morada/púrpura
+    const purplePalette = ['#7B1FA2', '#8E24AA', '#9C27B0', '#AB47BC', '#BA68C8', '#CE93D8', '#E1BEE7', '#F3E5F5'];
 
-var option3 = {
-    title: {
-        text: 'Body Weight Progress',
-        left: 'center',
-        textStyle: {
-            color: '#fff'
-        }
-    },
-    xAxis: {
-        type: 'category',
-        data: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-        axisLine: {
-            lineStyle: {
-                color: '#fff'
-            }
-        }
-    },
-    yAxis: {
-        type: 'value',
-        axisLine: {
-            lineStyle: {
-                color: '#fff'
-            }
-        }
-    },
-    series: [{
-        data: [75, 74.5, 74, 73.5],
-        type: 'line',
-        smooth: true,
-        color: '#ff6b6b'
-    }]
-};
+    var option = {
+        color: purplePalette,
+        title: {
+            text: 'Número de Suscriptores Activos',
+            textStyle: { color: '#FFFFFF' } // Título en blanco
+        },
+        tooltip: { trigger: 'axis' },
+        xAxis: {
+            type: 'category',
+            data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        },
+        yAxis: { type: 'value' },
+        series: [{
+            name: 'Suscriptores Activos',
+            type: 'line',
+            smooth: true,
+            data: [820, 932, 901, 934, 1290, 1330, 1320, 1400, 1500, 1600, 1700, 1800]
+        }]
+    };
 
-var option4 = {
-    title: {
-        text: 'Macronutrient Intake',
-        left: 'center',
-        textStyle: {
-            color: '#fff'
-        }
-    },
-    tooltip: {
-        trigger: 'item'
-    },
-    legend: {
-        top: 'bottom',
-        textStyle: {
-            color: '#fff'
-        }
-    },
-    series: [
-        {
-            name: 'Macronutrients',
-            type: 'pie',
-            radius: '50%',
-            data: [
-                { value: 1048, name: 'Carbohydrates' },
-                { value: 735, name: 'Proteins' },
-                { value: 580, name: 'Fats' }
-            ],
-            emphasis: {
-                itemStyle: {
-                    shadowBlur: 10,
-                    shadowOffsetX: 0,
-                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+    var option2 = {
+        color: purplePalette,
+        title: {
+            text: 'Nuevas Suscripciones por Mes',
+            textStyle: { color: '#FFFFFF' } // Título en blanco
+        },
+        tooltip: { trigger: 'axis' },
+        xAxis: {
+            type: 'category',
+            data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        },
+        yAxis: { type: 'value' },
+        series: [{
+            name: 'Nuevas Suscripciones',
+            type: 'bar',
+            data: [120, 200, 150, 80, 70, 110, 130, 180, 210, 230, 190, 240]
+        }]
+    };
+
+    var option3 = {
+        color: purplePalette,
+        title: {
+            text: 'Tasa de Cancelación de Suscripciones',
+            textStyle: { color: '#FFFFFF' } // Título en blanco
+        },
+        tooltip: { trigger: 'axis' },
+        xAxis: {
+            type: 'category',
+            data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        },
+        yAxis: { type: 'value' },
+        series: [{
+            name: 'Cancelaciones',
+            type: 'line',
+            smooth: true,
+            data: [10, 15, 20, 15, 12, 8, 6, 7, 8, 10, 5, 9]
+        }]
+    };
+
+    var heatmapOption = {
+        color: purplePalette, // Aplicar paleta de colores
+        title: {
+            text: 'Actividad de Usuario por Día',
+            textStyle: { color: '#FFFFFF' } // Título en blanco
+        },
+        tooltip: { trigger: 'axis' },
+        xAxis: {
+            type: 'category',
+            data: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+        },
+        yAxis: {
+            type: 'value',
+            axisLabel: {
+                color: '#FFFFFF' // Ejes en blanco
+            },
+            splitLine: {
+                lineStyle: {
+                    color: 'rgba(255, 255, 255, 0.2)' // Líneas de división tenues
                 }
             }
-        }
-    ]
-};
+        },
+        series: [{
+            name: 'Número de Actividades',
+            type: 'bar',
+            data: [50, 70, 90, 40, 80, 100, 60], // Datos de ejemplo; reemplázalos con los tuyos
+            barWidth: '50%', // Ancho de las barras
+        }]
+    };
 
-var option5 = {
-    title: {
-        text: 'Hydration Level',
-        left: 'center',
-        textStyle: {
-            color: '#fff'
-        }
-    },
-    xAxis: {
-        type: 'category',
-        data: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-        axisLine: {
-            lineStyle: {
-                color: '#fff'
+    function generateData() {
+        var data = [];
+        for (var i = 0; i < 7; i++) {
+            for (var j = 0; j < 4; j++) {
+                data.push([i, j, Math.floor(Math.random() * 100)]);
             }
         }
-    },
-    yAxis: {
-        type: 'value',
-        axisLine: {
-            lineStyle: {
-                color: '#fff'
-            }
-        }
-    },
-    series: [{
-        data: [2.5, 3.0, 3.2, 2.8],
-        type: 'bar',
-        color: '#00bcd4'
-    }]
-};
+        return data;
+    }
 
-chart1.setOption(option1);
-chart2.setOption(option2);
-chart3.setOption(option3);
-chart4.setOption(option4);
-chart5.setOption(option5);
+    myChart.setOption(option);
+    myChart2.setOption(option2);
+    myChart3.setOption(option3);
+    heatmapChart.setOption(heatmapOption);
+
+    // Fetch data function for dynamic updates
+    function fetchDataAndUpdateCharts(startDate, endDate) {
+        $.ajax({
+            url: '/api/subscriptions/stats',
+            method: 'GET',
+            data: { startDate: startDate, endDate: endDate },
+            success: function (data) {
+                myChart.setOption({ series: [{ data: data.activeSubscribers }] });
+                myChart2.setOption({ series: [{ data: data.newSubscriptions }] });
+                myChart3.setOption({ series: [{ data: data.cancellations }] });
+                heatmapChart.setOption({ series: [{ data: generateData() }] });
+
+                var table = $('#subscriptionTable').DataTable();
+                table.clear().rows.add(data.subscriptionDetails).draw();
+
+                checkThresholds(data);
+            }
+        });
+    }
+
+    function checkThresholds(data) {
+        if (data.cancellations.some(cancellation => cancellation > 20)) {
+            alert('¡Alerta! La tasa de cancelación ha superado el 20% en uno o más meses.');
+        }
+    }
+
+    $('#filterButton').click(function () {
+        var startDate = $('#startDate').val();
+        var endDate = $('#endDate').val();
+        fetchDataAndUpdateCharts(startDate, endDate);
+    });
+
+    fetchDataAndUpdateCharts();
+    setInterval(fetchDataAndUpdateCharts, 30000);
+
+    worldMapChart.showLoading();
+
+    $.get('/lib/echarts/world.json', function (worldJson) {
+        worldMapChart.hideLoading();
+        echarts.registerMap('World', worldJson);
+
+        var data = [
+            { name: 'United States', value: 331002651 },
+            { name: 'China', value: 1439323776 },
+            { name: 'India', value: 1380004385 },
+            { name: 'Indonesia', value: 273523615 },
+            { name: 'Pakistan', value: 220892340 },
+            { name: 'Brazil', value: 212559417 },
+            { name: 'Nigeria', value: 206139589 },
+            { name: 'Bangladesh', value: 164689383 },
+            { name: 'Russia', value: 145934462 },
+            { name: 'Mexico', value: 128932753 }
+        ];
+
+        const worldMapOption = {
+            color: purplePalette,
+            title: {
+                text: 'Población Mundial por País',
+                textStyle: { color: '#FFFFFF' } // Título en blanco
+            },
+            visualMap: {
+                left: 'right',
+                min: 0,
+                max: 1500000000,
+                inRange: {
+                    color: ['#E1BEE7', '#BA68C8', '#8E24AA', '#7B1FA2']
+                },
+                text: ['Alto', 'Bajo'],
+                calculable: true
+            },
+            series: [{
+                name: 'Población',
+                type: 'map',
+                roam: true,
+                map: 'World',
+                data: data
+            }]
+        };
+
+        worldMapChart.setOption(worldMapOption);
+    });
+});

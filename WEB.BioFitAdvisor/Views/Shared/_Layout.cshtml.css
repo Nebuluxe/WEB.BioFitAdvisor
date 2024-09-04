@@ -47,113 +47,46 @@ button.accept-policy {
   line-height: 60px;
 }
 
-#side-menu {
-    float: left;
-    width: 200px;
-    height: 100vh;
-    background: #1a1a1a;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,.2) !important;
-    transition: border-color 0.3s ease;
-    z-index: 9999 !important;
-    position: fixed;
-    padding-bottom: 20px;
-    transition: width 0.3s ease, transform 0.3s ease;
-    overflow: hidden;
+
+#nav-admin {
+    background: #262626;
+    padding: 3px;
 }
 
-#side-menu a{
-    color: white;
-    text-decoration: none;
-}
-
-#side-menu ul {
+#nav-admin .nav-link {
     padding: 0;
-}
-
-#side-menu .fw-normal li a {
-    width: 100%;
-    display: block;
-}
-
-#side-menu .fw-normal li {
-    padding-left: 15px;
-    padding-bottom: 3px;
-}
-
-#side-menu .fw-normal li:hover {
-    background: rgb(49, 49, 49)
-}
-
-#side-menu button {
+    margin-right: 10px;
     color: white;
+}
+
+#nav-admin .navbar-brand {
     padding: 0;
-    padding-left: 10px;
-    width: 100%;
-    text-align: left;
-    box-shadow: none;
-    /*border-bottom: 1px solid #3c3c3c;*/
-    border-radius: 0 !important;
-    padding-bottom: 5px;
+    color: white;
 }
 
-    #side-menu .collapse ul {
-        /*background: #262626;*/
-        margin-left: 10px;
-        margin-right: 10px;
-        border-radius: 10px;
-    }
-
-button:focus {
-    outline: none !important;
-}
-
-.btn-toggle {
-    display: inline-flex;
-    align-items: center;
-    padding: .25rem .5rem;
-    font-weight: 600;
-    color: rgba(0, 0, 0, .65);
-    background-color: transparent;
-    border: 0;
-}
-
-    .btn-toggle::before {
-        width: 1.25em;
-        line-height: 0;
-        content: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M5 14l6-6-6-6'/%3e%3c/svg%3e");
-        transition: transform .35s ease;
-        transform-origin: .5em 50%;
-    }
-
-.btn-toggle[aria-expanded="true"] {
-    color: rgba(0, 0, 0, .85);
-}
-
-.btn-toggle[aria-expanded="true"]::before {
-    transform: rotate(90deg);
-}
 
 #userAccount {
-    float: right;
-    margin: 15px;
     display: flex;
     align-items: center;
     cursor: pointer;
     z-index: 9999;
-    position: fixed;
-    right: 0px;
 }
 
 #userAccount .user-image {
     width: 40px;
     height: 40px;
-    background: black;
+    background: #333;
     border-radius: 50%;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,.2) !important;
+    z-index: 99;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
 }
 
 #userAccount .user-name {
-    background: #0000005e;
+    background: #333;
     color: white;
     padding: 2px;
     border-radius: 5px;
@@ -161,5 +94,40 @@ button:focus {
     position: relative;
     padding-right: 15px;
     padding-left: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,.2) !important;
 }
+
+.nav-pills .nav-link.active {
+    background-color: #7d20a3;
+    border-color: #7d20a3;
+}
+
+.sidebar .nav-item, .dropdown {
+    z-index: 10;
+}
+
+.sidebar {
+    width: 230px;
+    float: left;
+    height: 100vh;
+    background: #610588;
+    /*background-image: url('/img/sidebar-5.jpg');
+    background-size: cover;*/ /* Asegura que la imagen cubra todo el contenedor */
+    /*position: relative;*/ /* Necesario para que el pseudo-elemento se posicione correctamente */
+}
+
+/*.sidebar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #610588;
+    opacity: 0.77;*/ /* Opacidad del color */
+    /*z-index: 1;*/ /* Asegura que el pseudo-elemento esté encima de la imagen de fondo */
+/*}
+
+.sidebar-content {
+    position: relative;
+    z-index: 2;*/ /* Asegura que el contenido esté por encima del pseudo-elemento */
+/*}*/
