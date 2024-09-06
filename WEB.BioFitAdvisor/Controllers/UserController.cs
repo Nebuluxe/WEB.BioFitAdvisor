@@ -19,6 +19,34 @@ namespace WEB.BioFitAdvisor.Controllers
             _userDataManipulator = userDataManipulator;
         }
 
+        public async Task<IActionResult> CreateOrEdit(int id = 0)
+        {
+            var userData = _userDataManipulator.GetUserData();
+
+            if (userData == null)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (id == 0)
+            {
+                return View(new User());
+            }
+            else
+            {
+                var apiResponse = await _apiConsumer.GET($"/api/User/GetUser?userId={id}", userData.Token);
+                if (apiResponse.success)
+                {
+                    var user = JsonConvert.DeserializeObject<User>(apiResponse.response);
+                    return View(user);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+        }
+
         // Vista principal para listar usuarios
         public async Task<IActionResult> Index()
         {
@@ -30,7 +58,7 @@ namespace WEB.BioFitAdvisor.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            var apiResponse = await _apiConsumer.GET("Users/GetUsers", userData.Token);
+            var apiResponse = await _apiConsumer.GET("/api/User/GetUsers", userData.Token);
             if (apiResponse.success)
             {
                 var users = JsonConvert.DeserializeObject<IEnumerable<User>>(apiResponse.response);
@@ -53,7 +81,7 @@ namespace WEB.BioFitAdvisor.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            var apiResponse = await _apiConsumer.GET($"Users/GetUser?userId={id}", userData.Token);
+            var apiResponse = await _apiConsumer.GET($"/api/User/GetUser?userId={id}", userData.Token);
             if (apiResponse.success)
             {
                 var user = JsonConvert.DeserializeObject<User>(apiResponse.response);
@@ -81,7 +109,7 @@ namespace WEB.BioFitAdvisor.Controllers
             }
             else
             {
-                var apiResponse = await _apiConsumer.GET($"Users/GetUser?userId={id}", userData.Token);
+                var apiResponse = await _apiConsumer.GET($"/api/User/GetUser?userId={id}", userData.Token);
                 if (apiResponse.success)
                 {
                     var user = JsonConvert.DeserializeObject<User>(apiResponse.response);
@@ -109,7 +137,7 @@ namespace WEB.BioFitAdvisor.Controllers
             if (ModelState.IsValid)
             {
                 string jsonUser = JsonConvert.SerializeObject(user);
-                var apiResponse = await _apiConsumer.POST("Users/UpsertUser", userData.Token, jsonUser);
+                var apiResponse = await _apiConsumer.POST("/api/User/UpsertUser", userData.Token, jsonUser);
                 if (apiResponse.success)
                 {
                     return RedirectToAction(nameof(Index));
@@ -132,7 +160,7 @@ namespace WEB.BioFitAdvisor.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            var apiResponse = await _apiConsumer.GET($"Users/GetUser?userId={id}", userData.Token);
+            var apiResponse = await _apiConsumer.GET($"/api/User/GetUser?userId={id}", userData.Token);
             if (apiResponse.success)
             {
                 var user = JsonConvert.DeserializeObject<User>(apiResponse.response);
@@ -155,7 +183,7 @@ namespace WEB.BioFitAdvisor.Controllers
                 return RedirectToAction("Login", "Account");
             }
 
-            var apiResponse = await _apiConsumer.DELETE($"Users/DeleteUser?userId={id}", userData.Token);
+            var apiResponse = await _apiConsumer.DELETE($"/api/User/DeleteUser?userId={id}", userData.Token);
             if (apiResponse.success)
             {
                 return RedirectToAction(nameof(Index));

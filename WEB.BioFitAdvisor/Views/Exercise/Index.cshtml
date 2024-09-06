@@ -1,0 +1,46 @@
+﻿@using System.Collections.Generic
+@using API.BioFitAdvisor.Domain
+@model IEnumerable<API.BioFitAdvisor.Domain.Exercise>
+@{
+    ViewData["Title"] = "Listado de Ejercicios";
+}
+
+<h4 class="title-master">@ViewData["Title"]</h4>
+
+<div class="container-section">
+    <div class="table-responsive">
+        <table id="ExerciseTable" class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Categoría</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var exercise in Model)
+                {
+                    <tr>
+                        <td>@exercise.ExerciseName</td>
+                        <td>@exercise.Description</td>
+                        <td>@exercise.Category</td>
+                        <td>
+                            <a asp-action="Details" asp-route-id="@exercise.ExerciseId" class="btn btn-info">Ver</a>
+                            <a asp-action="CreateOrEdit" asp-route-id="@exercise.ExerciseId" class="btn btn-warning">Editar</a>
+                            <a asp-action="Delete" asp-route-id="@exercise.ExerciseId" class="btn btn-danger">Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            $('#ExerciseTable').DataTable();
+        });
+    </script>
+}

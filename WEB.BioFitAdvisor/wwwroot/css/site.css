@@ -159,3 +159,42 @@ body {
     color: rgba(0, 0, 0, 0.3);
     cursor: pointer;
 }
+
+table {
+    background: #292a3e;
+    border: none;
+}
+
+table tr td{
+    color: white;
+    border:0;
+}
+
+table tr, th{
+    color: white;
+    border: 0;
+}
+
+table tr td a.btn {
+    background: #1e202f;
+    color: white;
+    border: 0;
+}
+
+select {
+    background: #1e202f !important;
+    border: 0 !important;
+}
+
+.container-section {
+    padding: 15px;
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.title-master {
+    padding: 11.7px;
+    padding-left: 30px;
+    background: #151724;
+    margin: 0;
+}

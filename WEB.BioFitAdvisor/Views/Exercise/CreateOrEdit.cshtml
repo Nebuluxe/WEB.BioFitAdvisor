@@ -1,0 +1,45 @@
+﻿@using System.Collections.Generic
+@using API.BioFitAdvisor.Domain
+@model API.BioFitAdvisor.Domain.Exercise
+
+@{
+    ViewData["Title"] = Model.ExerciseId == 0 ? "Crear Ejercicio" : "Editar Ejercicio";
+}
+
+<h4 class="title-master">@ViewData["Title"]</h4>
+
+<div class="container-section" style="width: 400px;">
+    <form asp-action="CreateOrEdit" method="post">
+        <div class="mb-3">
+            <label asp-for="ExerciseName" class="form-label"></label>
+            <input asp-for="ExerciseName" class="form-control" />
+            <span asp-validation-for="ExerciseName" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label"></label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="Category" class="form-label"></label>
+            <input asp-for="Category" class="form-control" />
+            <span asp-validation-for="Category" class="text-danger"></span>
+        </div>
+        <div class="mb-3">
+            <label asp-for="VideoUrl" class="form-label"></label>
+            <input asp-for="VideoUrl" class="form-control" />
+            <span asp-validation-for="VideoUrl" class="text-danger"></span>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <input type="submit" value="Guardar" class="btn btn-primary" />
+            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

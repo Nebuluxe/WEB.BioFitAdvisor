@@ -27,8 +27,6 @@ namespace WEB.BioFitAdvisor.Controllers
         {
             try
             {
-                IList<UserCompany> ListEmpresas = new List<UserCompany>();
-
                 string json = JsonConvert.SerializeObject(user);
 
                 apiDTO apiDTO = await _ApiConsumer.POST("/api/User/Autentication", "", json);
@@ -40,56 +38,7 @@ namespace WEB.BioFitAdvisor.Controllers
                     _UserDataManipulator.SetUserData(oToken, true, 0);
                 }
 
-                return Json(new { success = apiDTO.success, userData = _UserDataManipulator.GetUserData(), companies = ListEmpresas });
-            }
-            catch (Exception ex)
-            {
-                return Json(new { success = false, error = ex });
-            }
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> SelectCompany([FromBody] SelectCompanyApp comp)
-        {
-            try
-            {
-                UserData user = _UserDataManipulator.GetUserData();
-
-                apiDTO apiDTO = await _ApiConsumer.POST("/api/User/SelectCompany?CompanyId=" + comp.CompanyId, user.Token, "");
-
-                if (apiDTO.success)
-                {
-                    ResponseToken oToken = JsonConvert.DeserializeObject<ResponseToken>(apiDTO.response);
-
-                    _UserDataManipulator.SetUserData(oToken, comp.KeepSession, comp.CompanyId);
-                }
-
                 return Json(new { success = apiDTO.success, userData = _UserDataManipulator.GetUserData() });
-            }
-            catch (Exception ex)
-            {
-                return Json(new { success = false, error = ex });
-            }
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GetUserCompanies()
-        {
-            try
-            {
-                UserData user = _UserDataManipulator.GetUserData();
-
-                apiDTO apiDTO = await _ApiConsumer.GET("/api/User/GetUserCompanies", user.Token);
-
-                IList<Company> ListEmpresas = new List<Company>();
-
-                if (apiDTO.success)
-                {
-                    ListEmpresas = JsonConvert.DeserializeObject<List<Company>>(apiDTO.response) ?? new List<Company>();
-
-                }
-
-                return Json(new { success = apiDTO.success, companies = ListEmpresas });
             }
             catch (Exception ex)
             {
