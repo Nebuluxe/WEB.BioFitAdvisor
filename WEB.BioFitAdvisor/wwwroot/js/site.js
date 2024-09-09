@@ -1,4 +1,118 @@
-﻿function Alert(titulo, mensaje, típoAlerta, duracionAlerta = 5000) {
+﻿// agGridConfig.js
+function getDefaultGridOptions(rowData, columnDefs) {
+    return {
+        columnDefs: columnDefs,
+        rowData: rowData,
+        pagination: true,
+        paginationPageSize: 10,
+        localeText: localeText,  // Puedes personalizar los textos aquí
+        defaultColDef: {
+            resizable: true,
+            sortable: true,
+            filter: true,
+            tooltipComponent: 'agTooltipComponent'
+        },
+        rowSelection: 'multiple',
+        onGridReady: function (params) {
+            params.api.sizeColumnsToFit(); // Ajustar columnas al tamaño del contenedor
+        }
+    };
+}
+
+// Definir localeText en español
+var localeText = {
+    // Paginación
+    page: 'Página',
+    more: 'Más',
+    to: 'a',
+    of: 'de',
+    next: 'Siguiente',
+    last: 'Último',
+    first: 'Primero',
+    previous: 'Anterior',
+    loadingOoo: 'Cargando...',
+
+    // Filtros
+    selectAll: 'Seleccionar todo',
+    searchOoo: 'Buscar...',
+    blanks: 'En blanco',
+    filterOoo: 'Filtrar...',
+    applyFilter: 'Aplicar Filtro...',
+    equals: 'Igual',
+    notEqual: 'Distinto',
+    lessThan: 'Menor que',
+    greaterThan: 'Mayor que',
+    lessThanOrEqual: 'Menor o igual',
+    greaterThanOrEqual: 'Mayor o igual',
+    inRange: 'En rango',
+    contains: 'Contiene',
+    notContains: 'No contiene',
+    startsWith: 'Empieza con',
+    endsWith: 'Termina con',
+
+    // Selección
+    noRowsToShow: 'No hay filas para mostrar',
+    loading: 'Cargando...',
+
+    // Grupo de columnas
+    group: 'Grupo',
+
+    // Exportación
+    export: 'Exportar',
+    csvExport: 'Exportar CSV',
+    excelExport: 'Exportar Excel',
+
+    // Columna
+    pinColumn: 'Fijar Columna',
+    valueAggregation: 'Agregación de Valor',
+    autosizeThiscolumn: 'Ajustar Esta Columna',
+    autosizeAllColumns: 'Ajustar Todas las Columnas',
+    groupBy: 'Agrupar por',
+    ungroupBy: 'Desagrupar por',
+    resetColumns: 'Restablecer Columnas',
+    expandAll: 'Expandir todo',
+    collapseAll: 'Contraer todo',
+    toolPanel: 'Panel de Herramientas',
+    pinLeft: 'Fijar a la Izquierda',
+    pinRight: 'Fijar a la Derecha',
+    noPin: 'Sin Fijar',
+    sum: 'Suma',
+    min: 'Mínimo',
+    max: 'Máximo',
+    none: 'Ninguno',
+    count: 'Contar',
+    avg: 'Promedio',
+    filteredRows: 'Filas Filtradas',
+    selectedRows: 'Filas Seleccionadas',
+    totalRows: 'Filas Totales',
+    totalAndFilteredRows: 'Filas Filtradas y Totales',
+    copy: 'Copiar',
+    copyWithHeaders: 'Copiar con Encabezados',
+    ctrlC: 'Ctrl+C',
+    paste: 'Pegar',
+    ctrlV: 'Ctrl+V'
+};
+
+// Función para formatear el estado
+function statusFormatter(params) {
+    return params.value === 'Activo' ? `<span class="badge bg-success">Activo</span>` : `<span class="badge bg-danger">Inactivo</span>`;
+}
+
+// Función para formatear el teléfono
+function phoneFormatter(params) {
+    return `<span>${params.value.replace(/(\d{3})(\d{3})(\d{4})/, '($1) $2-$3')}</span>`;
+}
+
+// Función para renderizar las acciones de la tabla
+function actionsFormatter(params) {
+    return `
+        <a href="/User/Details/${params.value}" class="btn btn-info me-1">Detalles</a>
+        <a href="/User/CreateOrEdit/${params.value}" class="btn btn-warning me-1">Editar</a>
+        <a href="/User/Delete/${params.value}" class="btn btn-danger">Eliminar</a>
+    `;
+}
+
+function Alert(titulo, mensaje, típoAlerta, duracionAlerta = 5000) {
     toast({
         title: titulo,
         message: mensaje,

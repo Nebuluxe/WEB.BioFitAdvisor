@@ -6,12 +6,13 @@
     ViewData["Title"] = Model.RoutineId == 0 ? "Crear Rutina" : "Editar Rutina";
 }
 
-<h4 class="title-master">@ViewData["Title"]</h4>
+<h4 class="header-view">@ViewData["Title"]</h4>
 
 <div class="container-section">
 
     <form asp-action="CreateOrEdit" method="post">
         <input type="hidden" asp-for="RoutineId" />
+        <input type="hidden"  asp-for="UserId" />
 
         <div class="mb-3">
             <label asp-for="Name" class="form-label"></label>

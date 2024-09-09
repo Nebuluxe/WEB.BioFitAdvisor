@@ -1,6 +1,34 @@
-﻿$(function () {
-    // Inicializa DataTable
-    $('#subscriptionTable').DataTable();
+﻿
+document.addEventListener('DOMContentLoaded', function () {
+    // Datos de ejemplo para la tabla de suscripciones
+    var rowData = [
+        { userName: 'Juan Pérez', subscriptionType: 'Premium', startDate: '2023-01-10', endDate: '2024-01-10', status: 'Activo' },
+        { userName: 'Ana López', subscriptionType: 'Standard', startDate: '2023-05-15', endDate: '2024-05-15', status: 'Activo' },
+        { userName: 'Carlos Rodríguez', subscriptionType: 'Basic', startDate: '2022-10-01', endDate: '2023-10-01', status: 'Inactivo' },
+        // Añade más datos según sea necesario
+    ];
+
+    // Definición de las columnas
+    var columnDefs = [
+        { headerName: 'Nombre del Usuario', field: 'userName', sortable: true, filter: true, checkboxSelection: true },
+        { headerName: 'Tipo de Suscripción', field: 'subscriptionType', sortable: true, filter: true },
+        { headerName: 'Fecha de Inicio', field: 'startDate', sortable: true, filter: 'agDateColumnFilter' },
+        { headerName: 'Fecha de Expiración', field: 'endDate', sortable: true, filter: 'agDateColumnFilter' },
+        { headerName: 'Estado', field: 'status', sortable: true, filter: true, cellRenderer: statusFormatter }
+    ];
+
+    // Configuración de AG-Grid
+    var gridOptions = getDefaultGridOptions(rowData, columnDefs);
+
+    var gridDiv = document.querySelector('#subscriptionTable');
+    new agGrid.Grid(gridDiv, gridOptions);
+
+    // Formateador de estado para aplicar estilo a los estados
+    function statusFormatter(params) {
+        return params.value === 'Activo' ? `<span class="badge bg-success">Activo</span>` : `<span class="badge bg-danger">Inactivo</span>`;
+    }
+});
+$(function () {
 
     // Inicializa los gráficos de eCharts
     var myChart = echarts.init(document.getElementById('chartContainer'));

@@ -1,48 +1,131 @@
-﻿@using System.Collections.Generic
+﻿@using System.Text.Json
 @using API.BioFitAdvisor.Domain
 @model IEnumerable<API.BioFitAdvisor.Domain.Routine>
 @{
     ViewData["Title"] = "Rutinas";
+    var routinesJson = JsonSerializer.Serialize(Model.Select(routine => new
+    {
+        name = routine.Name,
+        description = routine.Description,
+        startDate = routine.StartDate.ToString("yyyy-MM-dd"),
+        endDate = routine.EndDate.ToString("yyyy-MM-dd"),
+        routineId = routine.RoutineId
+    }));
 }
 
-<h4 class="title-master">@ViewData["Title"]</h4>
+<style>
+    .card {
+        color: black;
+    }
+</style>
 
-<div class="container-section">
-    <div class="table-responsive">
-        <table id="RoutineTable" class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
-                    <th>Fecha de Inicio</th>
-                    <th>Fecha de Fin</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var routine in Model)
-                {
-                    <tr>
-                        <td>@routine.Name</td>
-                        <td>@routine.Description</td>
-                        <td>@routine.StartDate.ToString("yyyy-MM-dd")</td>
-                        <td>@routine.EndDate.ToString("yyyy-MM-dd")</td>
-                        <td>
-                            <a asp-action="Details" asp-route-id="@routine.RoutineId" class="btn btn-info">Detalles</a>
-                            <a asp-action="CreateOrEdit" asp-route-id="@routine.RoutineId" class="btn btn-warning">Editar</a>
-                            <a asp-action="Delete" asp-route-id="@routine.RoutineId" class="btn btn-danger">Eliminar</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+<div class="header-view">
+    <h4>@ViewData["Title"]</h4>
+    <div class="header-buttons">
+        <a class="btn btn-success btn-sm me-1" href="/Routine/CreateOrEdit">Crear</a>
+        <button id="toggleViewButton" class="btn btn-primary btn-sm">Cambiar a Vista de Tarjetas</button>
     </div>
 </div>
 
+<!-- Contenedor para la vista de tabla (AG-Grid) -->
+<div class="container-section">
+    <div id="tableView" class="ag-theme-alpine-dark" style="height: 600px; width: 100%;"></div>
+</div>
+
+<!-- Contenedor para la vista de tarjetas -->
+<div class="container-section" id="cardView" style="display: none;">
+    <div class="row"></div>
+</div>
+
 @section Scripts {
+    <script src="~/js/agGridConfig.js"></script> <!-- Reutilizamos la configuración global -->
+
     <script>
-        $(function () {
-            $('#RoutineTable').DataTable();
+        document.addEventListener('DOMContentLoaded', function () {
+            // Datos generados desde Razor
+            var rowData = @Html.Raw(routinesJson);
+
+            // Definir las columnas
+            var columnDefs = [
+                { headerName: 'Nombre', field: 'name', sortable: true, filter: true, checkboxSelection: true },
+                { headerName: 'Descripción', field: 'description', sortable: true, filter: true },
+                { headerName: 'Fecha de Inicio', field: 'startDate', sortable: true, filter: 'agDateColumnFilter' },
+                { headerName: 'Fecha de Fin', field: 'endDate', sortable: true, filter: 'agDateColumnFilter' },
+                {
+                    headerName: 'Acciones', field: 'routineId', cellRenderer: function (params) {
+                        return `
+                                    <a href="/Routine/Details/${params.value}" class="btn btn-info me-1">Detalles</a>
+                                    <a href="/Routine/CreateOrEdit/${params.value}" class="btn btn-warning me-1">Editar</a>
+                                    <a href="/Routine/Delete/${params.value}" class="btn btn-danger">Eliminar</a>
+                                `;
+                    }
+                }
+            ];
+
+            // Inicializar AG-Grid con las configuraciones globales
+            var gridOptions = getDefaultGridOptions(rowData, columnDefs);
+
+            var gridDiv = document.querySelector('#tableView');
+            new agGrid.Grid(gridDiv, gridOptions);
+
+            // Alternar entre la vista de tabla y la vista de tarjetas
+            document.getElementById('toggleViewButton').addEventListener('click', function () {
+                var tableView = document.getElementById('tableView');
+                var cardView = document.getElementById('cardView');
+                if (tableView.style.display === 'none') {
+                    // Mostrar la vista de tabla
+                    tableView.style.display = 'block';
+                    cardView.style.display = 'none';
+                    this.textContent = 'Cambiar a Vista de Tarjetas';
+                } else {
+                    // Mostrar la vista de tarjetas
+                    tableView.style.display = 'none';
+                    cardView.style.display = 'block';
+                    this.textContent = 'Cambiar a Vista de Tabla';
+                    renderCardView(rowData);
+                }
+            });
+
+            // Renderizar la vista de tarjetas
+            function renderCardView(data) {
+                var cardView = document.querySelector('#cardView .row');
+                cardView.innerHTML = '';  // Limpiar las tarjetas anteriores
+
+                data.forEach(function (row) {
+                    var card = document.createElement('div');
+                    card.className = 'col-md-4 mb-3';
+                    card.innerHTML = `
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${row.name}</h5>
+                                        <p class="card-text"><strong>Descripción:</strong> ${row.description}</p>
+                                        <p class="card-text"><strong>Fecha de Inicio:</strong> ${row.startDate}</p>
+                                        <p class="card-text"><strong>Fecha de Fin:</strong> ${row.endDate}</p>
+                                        <a href="/Routine/Details/${row.routineId}" class="btn btn-info me-1">Detalles</a>
+                                        <a href="/Routine/CreateOrEdit/${row.routineId}" class="btn btn-warning me-1">Editar</a>
+                                        <a href="/Routine/Delete/${row.routineId}" class="btn btn-danger">Eliminar</a>
+                                    </div>
+                                </div>
+                            `;
+                    cardView.appendChild(card);
+                });
+            }
+
+            // Buscador global
+            document.getElementById('quickSearch').addEventListener('input', function () {
+                gridOptions.api.setQuickFilter(this.value);
+            });
+
+            // Exportar a CSV
+            document.getElementById('exportButton').addEventListener('click', function () {
+                gridOptions.api.exportDataAsCsv();
+            });
         });
     </script>
+
+    <!-- Agrega el input para el buscador global -->
+    <div class="d-flex justify-content-between mb-2">
+        <input type="text" id="quickSearch" placeholder="Buscar..." class="form-control w-25">
+        <button id="exportButton" class="btn btn-primary">Exportar a CSV</button>
+    </div>
 }

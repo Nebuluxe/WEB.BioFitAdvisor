@@ -9,57 +9,59 @@
     <link rel="stylesheet" href="~/WEB.BioFitAdvisor.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/jquery-ui/jquery-ui.css"   />
     <link rel="stylesheet" href="~/webSite/css/maicons.css">
-    <link rel="stylesheet" href="~/lib/datatables/datatables.min.css" />
+    <link rel="stylesheet" href="~/lib/ag-grid/styles/ag-grid.css">
+    <link rel="stylesheet" href="~/lib/ag-grid/styles/ag-theme-alpine.css">
+    @* <link rel="stylesheet" href="~/lib/datatables/datatables.min.css" /> *@
 </head>
 <body style="background-color: #f5f5f5; overflow: hidden">
     <div class="d-flex flex-column flex-shrink-0 text-bg-dark sidebar">
-        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 text-white text-decoration-none p-2" style="display: flex !important;justify-content: center;background: #7d20a3;z-index: 10;">
+        <a href="/" class="d-flex align-items-center mb-3 mb-md-0 text-white text-decoration-none p-2" style="display: flex !important;justify-content: center;background: #610588;z-index: 10;">
             <span class="fs-4">BioFit Advisor</span>
         </a>
         <ul class="nav nav-pills flex-column mb-auto p-2">
             <li class="nav-item">
-                <a href="#" class="nav-link active text-white" aria-current="page">
+                <a href="/Home/Index" class="nav-link text-white" data-url="/Home/Index">
                     <span class="mai-speedometer" style="font-size: 16px; margin-right: 5px;"></span> Dashboard
                 </a>
             </li>
             <li class="nav-item">
-                <a href="/User/Index" class="nav-link text-white">
+                <a href="/User/Index" class="nav-link text-white" data-url="/User/Index">
                     <span class="mai-people" style="font-size: 16px; margin-right: 5px;"></span> Usuarios
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link text-white">
-                    <span class="mai-wallet" style="font-size: 16px; margin-right: 5px;"></span> Suscripciones
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/Exercise/Index" class="nav-link text-white">
+                <a href="/Exercise/Index" class="nav-link text-white" data-url="/Exercise/Index">
                     <span class="mai-library" style="font-size: 16px; margin-right: 5px;"></span> Libreria Ejercicios
                 </a>
             </li>
             <li class="nav-item">
-                <a href="/Routine/Index" class="nav-link text-white">
+                <a href="/Routine/Index" class="nav-link text-white" data-url="/Routine/Index">
                     <span class="mai-fitness" style="font-size: 16px; margin-right: 5px;"></span> Rutinas
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link text-white">
+                <a href="/IAMonitor/Index" class="nav-link text-white" data-url="/IAMonitor/Index">
                     <span class="mai-analytics" style="font-size: 16px; margin-right: 5px;"></span> IA Monitor
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link text-white">
-                    <span class="mai-document-text" style="font-size: 16px; margin-right: 5px;"></span> Reportes
+                <a href="/LogReports/Index" class="nav-link text-white" data-url="/LogReports/Index">
+                    <span class="mai-document-text" style="font-size: 16px; margin-right: 5px;"></span> Reportes de Log
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link text-white">
-                    <span class="mai-notifications" style="font-size: 16px; margin-right: 5px;"></span> Notificaciones
+                <a href="/Updates/Index" class="nav-link text-white" data-url="/Updates/Index">
+                    <span class="mai-information-circle" style="font-size: 16px; margin-right: 5px;"></span> Updates
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link text-white">
-                    <span class="mai-settings" style="font-size: 16px; margin-right: 5px;"></span> Configuración
+                <a href="/Message/Index" class="nav-link text-white" data-url="/Message/Index">
+                    <span class="mai-mail" style="font-size: 16px; margin-right: 5px;"></span> Mensajes
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/Subscriptions/Index" class="nav-link text-white" data-url="/Subscriptions/Index">
+                    <span class="mai-wallet" style="font-size: 16px; margin-right: 5px;"></span> Suscripciones
                 </a>
             </li>
         </ul>
@@ -71,13 +73,12 @@
             <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
                 <li><a class="dropdown-item" href="#">Perfil</a></li>
                 <li><a class="dropdown-item" href="#">Configuración</a></li>
-                <li><hr class="dropdown-divider">Notificaciones</li>
                 <li><a class="dropdown-item" href="#">Cerrar sesión</a></li>
             </ul>
         </div>
     </div>
 
-    <div style="height: 100vh;overflow: hidden;overflow-y: scroll; background: #1e202f">
+    <div style="height: 100vh;overflow: hidden;overflow-y: scroll; background: #222628">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
@@ -90,7 +91,38 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/lib/datatables/datatables.min.js" asp-append-version="true"></script>
+    <script src="~/lib/ag-grid/dist/ag-grid-community.noStyle.js"></script>
+
+    @* <script src="~/lib/datatables/datatables.min.js" asp-append-version="true"></script> *@
     @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Obtener la URL actual de la página (sin parámetros ni hashes)
+            var currentUrl = window.location.pathname;
+
+            // Iterar sobre los enlaces del menú y verificar cuál coincide con la URL actual
+            document.querySelectorAll('.nav-link').forEach(function (link) {
+                var linkUrl = link.getAttribute('href');
+
+                // Comprobaciones para cada sección del sidebar
+                if (currentUrl.includes('/Home') && linkUrl.includes('/Home')) {
+                    link.classList.add('active');
+                } else if (currentUrl.includes('/User') && linkUrl.includes('/User')) {
+                    link.classList.add('active');
+                } else if (currentUrl.includes('/Exercise') && linkUrl.includes('/Exercise')) {
+                    link.classList.add('active');
+                } else if (currentUrl.includes('/Routine') && linkUrl.includes('/Routine')) {
+                    link.classList.add('active');
+                } else if (currentUrl.includes('/IAMonitor') && linkUrl.includes('/IAMonitor')) {
+                    link.classList.add('active');
+                } else if (currentUrl.includes('/LogReports') && linkUrl.includes('/LogReports')) {
+                    link.classList.add('active');
+                } else if (currentUrl.includes('/Subscriptions') && linkUrl.includes('/Subscriptions')) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

@@ -59,36 +59,7 @@ $(function () {
             data: JSON.stringify(datos),
             success: function (response) {
                 if (response.success) {
-                    var ListCom = response.companies;
-
-                    if (ListCom.length > 0) {
-                        setUserData(response.userData);
-
-                        var companies = "";
-
-                        var cboCompaniesUser = document.getElementById("cboCompaniesUser");
-
-                        cboCompaniesUser.innerHTML = "";
-
-                        var defaultOption = document.createElement("option");
-                        defaultOption.value = "0";
-                        defaultOption.selected = true;
-                        defaultOption.textContent = "Seleccione...";
-                        cboCompaniesUser.appendChild(defaultOption);
-
-                        ListCom.forEach(function (element) {
-                            var option = document.createElement("option");
-                            option.value = element.companyId;
-                            option.textContent = element.businessName;
-                            cboCompaniesUser.appendChild(option);
-                        });
-
-                        $("#formLogin").addClass("hide");
-                        $("#formSelectCompany").removeClass("hide");
-                    }
-                    else {
-                        Alert("", "No tienes suscripciones vigentes", "warning", 3000);
-                    }
+                    window.location.href = '/Home/Index';
                 }
                 else {
                     Alert("", "El usuario o la contraseña no son validos", "warning", 3000);

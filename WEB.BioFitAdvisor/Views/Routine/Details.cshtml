@@ -6,7 +6,7 @@
     ViewData["Title"] = "Detalles de Rutina";
 }
 
-<h4 class="title-master">@ViewData["Title"]</h4>
+<h4 class="header-view">@ViewData["Title"]</h4>
 
 <div class="container-section">
     <h2>@Model.Name</h2>
@@ -117,6 +117,6 @@
         <p>No hay dietas asignadas.</p>
     }
 
-    <a asp-action="Edit" asp-route-id="@Model.RoutineId" class="btn btn-primary">Editar</a>
+    <a asp-action="CreateOrEdit" asp-route-id="@Model.RoutineId" class="btn btn-primary">Editar</a>
     <a asp-action="Index" class="btn btn-secondary">Volver al listado</a>
 </div>

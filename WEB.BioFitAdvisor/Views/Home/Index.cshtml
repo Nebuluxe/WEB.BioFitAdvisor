@@ -10,7 +10,7 @@
         margin-bottom: 10px;
         box-shadow: 0px 8px 28px -9px rgba(0,0,0,0.15);
         padding: 10px;
-        background: #292a3e;
+        background: #181d1f;
         border-radius: 0;
         width: 100%;
         height: 300px;
@@ -31,7 +31,7 @@
     }
 
     .card-body{
-        background: #292a3e;
+        background: #181d1f;
     }
 </style>
 
@@ -129,31 +129,9 @@
             <div id="worldMapChart" class="chart-container" style="height: 98%;"></div>
         </div>
 
-        <div class="col-lg-12" style="box-shadow: 0px 8px 28px -9px rgba(0,0,0,0.15);background: #292a3e;border-radius: 0;">
-            <!-- Tabla para datos de suscripciones -->
-            <h5>Detalles de Suscripciones</h5>
-            <table id="subscriptionTable" class="display" style="width:100%">
-                <thead>
-                    <tr>
-                        <th>Nombre del Usuario</th>
-                        <th>Tipo de Suscripción</th>
-                        <th>Fecha de Inicio</th>
-                        <th>Fecha de Expiración</th>
-                        <th>Estado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Datos de ejemplo; en producción, llenar dinámicamente -->
-                    <tr>
-                        <td>Juan Pérez</td>
-                        <td>Premium</td>
-                        <td>2023-01-10</td>
-                        <td>2024-01-10</td>
-                        <td>Activo</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        <!-- Tabla AG-Grid de Suscripciones -->
+        <h5>Detalles de Suscripciones</h5>
+        <div id="subscriptionTable" class="ag-theme-alpine-dark" style="height: 400px; width: 100%;"></div>
     </div>
 </div>
 

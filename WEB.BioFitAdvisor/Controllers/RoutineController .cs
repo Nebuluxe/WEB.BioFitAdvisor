@@ -58,7 +58,6 @@ namespace WEB.BioFitAdvisor.Controllers
                 if (apiResponse.success)
                 {
                     var routine = JsonConvert.DeserializeObject<Routine>(apiResponse.response);
-                    await LoadRoutineComponents(routine, userData.Token); // Cargar componentes
                     return View(routine);
                 }
                 else
@@ -108,7 +107,6 @@ namespace WEB.BioFitAdvisor.Controllers
             if (apiResponse.success)
             {
                 var routine = JsonConvert.DeserializeObject<Routine>(apiResponse.response);
-                await LoadRoutineComponents(routine, userData.Token); // Cargar componentes asociados
                 return View(routine);
             }
             else

@@ -1,10 +1,15 @@
-/**
- * website v1.0.0
- * Copyright 2020 by MACode ID
- * Site: www.macodeid.com
- * License under CC 4.0 ()
- */
+@font-face {
+    font-family: 'Roboto Bold', sans-serif;
+    src: url('/Font/Roboto-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
 
+* {
+    font-family: 'Roboto' !important;
+    list-style: none;
+    text-decoration: none;
+}
 :root {
   --primary: #3D58F3;
   --secondary: #A52EFF;

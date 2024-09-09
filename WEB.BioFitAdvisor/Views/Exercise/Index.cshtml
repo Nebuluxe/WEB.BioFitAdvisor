@@ -1,46 +1,122 @@
-﻿@using System.Collections.Generic
+﻿@using System.Text.Json
 @using API.BioFitAdvisor.Domain
 @model IEnumerable<API.BioFitAdvisor.Domain.Exercise>
 @{
     ViewData["Title"] = "Listado de Ejercicios";
+    var exercisesJson = JsonSerializer.Serialize(Model.Select(exercise => new
+    {
+        exerciseName = exercise.ExerciseName,
+        description = exercise.Description,
+        category = exercise.Category,
+        exerciseId = exercise.ExerciseId
+    }));
 }
 
-<h4 class="title-master">@ViewData["Title"]</h4>
-
-<div class="container-section">
-    <div class="table-responsive">
-        <table id="ExerciseTable" class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
-                    <th>Categoría</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var exercise in Model)
-                {
-                    <tr>
-                        <td>@exercise.ExerciseName</td>
-                        <td>@exercise.Description</td>
-                        <td>@exercise.Category</td>
-                        <td>
-                            <a asp-action="Details" asp-route-id="@exercise.ExerciseId" class="btn btn-info">Ver</a>
-                            <a asp-action="CreateOrEdit" asp-route-id="@exercise.ExerciseId" class="btn btn-warning">Editar</a>
-                            <a asp-action="Delete" asp-route-id="@exercise.ExerciseId" class="btn btn-danger">Eliminar</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+<div class="header-view">
+    <h4>@ViewData["Title"]</h4>
+    <div class="header-buttons">
+        <a class="btn btn-success btn-sm me-1" href="/Exercise/CreateOrEdit">Crear</a>
+        <button id="toggleViewButton" class="btn btn-primary btn-sm">Cambiar a Vista de Tarjetas</button>
     </div>
 </div>
 
+<!-- Contenedor para la vista de tabla (AG-Grid) -->
+<div class="container-section">
+    <div id="tableView" class="ag-theme-alpine-dark" style="height: 600px; width: 100%;"></div>
+</div>
+
+<!-- Contenedor para la vista de tarjetas -->
+<div class="container-section" id="cardView" style="display: none;">
+    <div class="row"></div>
+</div>
+
 @section Scripts {
+    <script src="~/js/agGridConfig.js"></script> <!-- Reutilizamos la configuración global -->
+
     <script>
-        $(function () {
-            $('#ExerciseTable').DataTable();
+        document.addEventListener('DOMContentLoaded', function () {
+            // Datos generados desde Razor
+            var rowData = @Html.Raw(exercisesJson);
+
+            // Definir las columnas
+            var columnDefs = [
+                { headerName: 'Nombre', field: 'exerciseName', sortable: true, filter: true, checkboxSelection: true },
+                { headerName: 'Descripción', field: 'description', sortable: true, filter: true },
+                { headerName: 'Categoría', field: 'category', sortable: true, filter: true },
+                {
+                    headerName: 'Acciones', field: 'exerciseId', cellRenderer: function (params) {
+                        return `
+                                    <a href="/Exercise/Details/${params.value}" class="btn btn-info me-1">Ver</a>
+                                    <a href="/Exercise/CreateOrEdit/${params.value}" class="btn btn-warning me-1">Editar</a>
+                                    <a href="/Exercise/Delete/${params.value}" class="btn btn-danger">Eliminar</a>
+                                `;
+                    }
+                }
+            ];
+
+            // Inicializar AG-Grid con las configuraciones globales
+            var gridOptions = getDefaultGridOptions(rowData, columnDefs);
+
+            var gridDiv = document.querySelector('#tableView');
+            new agGrid.Grid(gridDiv, gridOptions);
+
+            // Alternar entre la vista de tabla y la vista de tarjetas
+            document.getElementById('toggleViewButton').addEventListener('click', function () {
+                var tableView = document.getElementById('tableView');
+                var cardView = document.getElementById('cardView');
+                if (tableView.style.display === 'none') {
+                    // Mostrar la vista de tabla
+                    tableView.style.display = 'block';
+                    cardView.style.display = 'none';
+                    this.textContent = 'Cambiar a Vista de Tarjetas';
+                } else {
+                    // Mostrar la vista de tarjetas
+                    tableView.style.display = 'none';
+                    cardView.style.display = 'block';
+                    this.textContent = 'Cambiar a Vista de Tabla';
+                    renderCardView(rowData);
+                }
+            });
+
+            // Renderizar la vista de tarjetas
+            function renderCardView(data) {
+                var cardView = document.querySelector('#cardView .row');
+                cardView.innerHTML = '';  // Limpiar las tarjetas anteriores
+
+                data.forEach(function (row) {
+                    var card = document.createElement('div');
+                    card.className = 'col-md-4 mb-3';
+                    card.innerHTML = `
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${row.exerciseName}</h5>
+                                        <p class="card-text"><strong>Descripción:</strong> ${row.description}</p>
+                                        <p class="card-text"><strong>Categoría:</strong> ${row.category}</p>
+                                        <a href="/Exercise/Details/${row.exerciseId}" class="btn btn-info me-1">Ver</a>
+                                        <a href="/Exercise/CreateOrEdit/${row.exerciseId}" class="btn btn-warning me-1">Editar</a>
+                                        <a href="/Exercise/Delete/${row.exerciseId}" class="btn btn-danger">Eliminar</a>
+                                    </div>
+                                </div>
+                            `;
+                    cardView.appendChild(card);
+                });
+            }
+
+            // Buscador global
+            document.getElementById('quickSearch').addEventListener('input', function () {
+                gridOptions.api.setQuickFilter(this.value);
+            });
+
+            // Exportar a CSV
+            document.getElementById('exportButton').addEventListener('click', function () {
+                gridOptions.api.exportDataAsCsv();
+            });
         });
     </script>
+
+    <!-- Agrega el input para el buscador global -->
+    <div class="d-flex justify-content-between mb-2">
+        <input type="text" id="quickSearch" placeholder="Buscar..." class="form-control w-25">
+        <button id="exportButton" class="btn btn-primary">Exportar a CSV</button>
+    </div>
 }
