@@ -1,28 +1,22 @@
 ﻿@using System.Text.Json
 @using API.BioFitAdvisor.Domain
-@model IEnumerable<API.BioFitAdvisor.Domain.Routine>
+@model IEnumerable<Plan>
+
 @{
-    ViewData["Title"] = "Rutinas";
-    var routinesJson = JsonSerializer.Serialize(Model.Select(routine => new
+    ViewData["Title"] = "Planes";
+    var plansJson = JsonSerializer.Serialize(Model.Select(plan => new
     {
-        name = routine.Name,
-        description = routine.Description,
-        startDate = routine.StartDate.ToString("yyyy-MM-dd"),
-        endDate = routine.EndDate.ToString("yyyy-MM-dd"),
-        routineId = routine.RoutineId
+        planId = plan.PlanId,
+        name = plan.Name,
+        description = plan.Description,
+        numberOfWeeks = plan.NumberOfWeeks
     }));
 }
-
-<style>
-    .card {
-        color: black;
-    }
-</style>
 
 <div class="header-view">
     <h4>@ViewData["Title"]</h4>
     <div class="header-buttons">
-        <a class="btn btn-success btn-sm me-1" href="/Routine/CreateOrEdit">Crear</a>
+        <a class="btn btn-success btn-sm me-1" href="/Plan/CreateOrEdit">Crear</a>
         <button id="toggleViewButton" class="btn btn-primary btn-sm">Cambiar a Vista de Tarjetas</button>
     </div>
 </div>
@@ -38,26 +32,23 @@
 </div>
 
 @section Scripts {
-    <script src="~/js/agGridConfig.js"></script> <!-- Reutilizamos la configuración global -->
-
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             // Datos generados desde Razor
-            var rowData = @Html.Raw(routinesJson);
+            var rowData = @Html.Raw(plansJson);
 
             // Definir las columnas
             var columnDefs = [
                 { headerName: 'Nombre', field: 'name', sortable: true, filter: true, checkboxSelection: true },
                 { headerName: 'Descripción', field: 'description', sortable: true, filter: true },
-                { headerName: 'Fecha de Inicio', field: 'startDate', sortable: true, filter: 'agDateColumnFilter' },
-                { headerName: 'Fecha de Fin', field: 'endDate', sortable: true, filter: 'agDateColumnFilter' },
+                { headerName: 'Número de Semanas', field: 'numberOfWeeks', sortable: true, filter: true },
                 {
-                    headerName: 'Acciones', field: 'routineId', cellRenderer: function (params) {
+                    headerName: 'Acciones', field: 'planId', cellRenderer: function (params) {
                         return `
-                                    <a href="/Routine/Details/${params.value}" class="btn btn-info me-1">Detalles</a>
-                                    <a href="/Routine/CreateOrEdit/${params.value}" class="btn btn-warning me-1">Editar</a>
-                                    <a href="/Routine/Delete/${params.value}" class="btn btn-danger">Eliminar</a>
-                                `;
+                                            <a href="/Plan/Details/${params.value}" class="btn btn-info me-1">Detalles</a>
+                                            <a href="/Plan/CreateOrEdit/${params.value}" class="btn btn-warning me-1">Editar</a>
+                                            <a href="/Plan/Delete/${params.value}" class="btn btn-danger">Eliminar</a>
+                                        `;
                     }
                 }
             ];
@@ -95,18 +86,17 @@
                     var card = document.createElement('div');
                     card.className = 'col-md-4 mb-3';
                     card.innerHTML = `
-                                <div class="card">
-                                    <div class="card-body">
-                                        <h5 class="card-title">${row.name}</h5>
-                                        <p class="card-text"><strong>Descripción:</strong> ${row.description}</p>
-                                        <p class="card-text"><strong>Fecha de Inicio:</strong> ${row.startDate}</p>
-                                        <p class="card-text"><strong>Fecha de Fin:</strong> ${row.endDate}</p>
-                                        <a href="/Routine/Details/${row.routineId}" class="btn btn-info me-1">Detalles</a>
-                                        <a href="/Routine/CreateOrEdit/${row.routineId}" class="btn btn-warning me-1">Editar</a>
-                                        <a href="/Routine/Delete/${row.routineId}" class="btn btn-danger">Eliminar</a>
-                                    </div>
-                                </div>
-                            `;
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h5 class="card-title">${row.name}</h5>
+                                                <p class="card-text"><strong>Descripción:</strong> ${row.description}</p>
+                                                <p class="card-text"><strong>Número de Semanas:</strong> ${row.numberOfWeeks}</p>
+                                                <a href="/Plan/Details/${row.planId}" class="btn btn-info me-1">Detalles</a>
+                                                <a href="/Plan/CreateOrEdit/${row.planId}" class="btn btn-warning me-1">Editar</a>
+                                                <a href="/Plan/Delete/${row.planId}" class="btn btn-danger">Eliminar</a>
+                                            </div>
+                                        </div>
+                                    `;
                     cardView.appendChild(card);
                 });
             }
@@ -122,10 +112,4 @@
             });
         });
     </script>
-
-    <!-- Agrega el input para el buscador global -->
-    <div class="d-flex justify-content-between mb-2">
-        <input type="text" id="quickSearch" placeholder="Buscar..." class="form-control w-25">
-        <button id="exportButton" class="btn btn-primary">Exportar a CSV</button>
-    </div>
 }

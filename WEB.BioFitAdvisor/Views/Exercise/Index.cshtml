@@ -1,6 +1,6 @@
 ﻿@using System.Text.Json
 @using API.BioFitAdvisor.Domain
-@model IEnumerable<API.BioFitAdvisor.Domain.Exercise>
+@model IEnumerable<API.BioFitAdvisor.Domain.ExerciseLibrary>
 @{
     ViewData["Title"] = "Listado de Ejercicios";
     var exercisesJson = JsonSerializer.Serialize(Model.Select(exercise => new

@@ -1,0 +1,129 @@
+﻿@using System.Text.Json
+@using API.BioFitAdvisor.Domain
+@model Plan
+
+@{
+    ViewData["Title"] = Model.PlanId == 0 ? "Crear Plan" : "Editar Plan";
+}
+
+<h4 class="header-view">@ViewData["Title"]</h4>
+
+<div class="container-section">
+    <form asp-action="CreateOrEdit" method="post">
+        <input type="hidden" asp-for="PlanId" />
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Description" class="form-label"></label>
+            <textarea asp-for="Description" class="form-control"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="NumberOfWeeks" class="form-label"></label>
+            <input asp-for="NumberOfWeeks" type="number" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Status" class="form-label"></label>
+            <input asp-for="Status" type="checkbox" />
+        </div>
+
+        <h3>Ejercicios</h3>
+        <button id="addExercise" class="btn btn-primary">Agregar Ejercicio</button>
+        <table id="exerciseTable" class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>Día</th>
+                    <th>Ejercicio</th>
+                    <th>Subidentificador</th>
+                    <th>Duración (segundos)</th>
+                    <th>Repeticiones</th>
+                    <th>Series</th>
+                    <th>Porcentaje de Peso</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Exercises.Count; i++)
+                {
+                    <tr>
+                        <td><input type="number" name="Exercises[@i].DayNumber" value="@Model.Exercises[i].DayNumber" class="form-control" /></td>
+                        <td><input type="text" name="Exercises[@i].ExerciseIdentifier" value="@Model.Exercises[i].ExerciseIdentifier" class="form-control" /></td>
+                        <td><input type="text" name="Exercises[@i].ExerciseSubIdentifier" value="@Model.Exercises[i].ExerciseSubIdentifier" class="form-control" /></td>
+                        <td><input type="number" name="Exercises[@i].Duration" value="@Model.Exercises[i].Duration" class="form-control" /></td>
+                        <td><input type="number" name="Exercises[@i].Repetitions" value="@Model.Exercises[i].Repetitions" class="form-control" /></td>
+                        <td><input type="number" name="Exercises[@i].Sets" value="@Model.Exercises[i].Sets" class="form-control" /></td>
+                        <td><input type="text" name="Exercises[@i].WeightPercentage" value="@Model.Exercises[i].WeightPercentage" class="form-control" /></td>
+                        <td><button type="button" class="btn btn-danger removeExercise">Quitar</button></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <h3>Recomendaciones</h3>
+        <div class="mb-3">
+            <label asp-for="Recommendation.Recommendation" class="form-label">Recomendación de descanso</label>
+            <textarea asp-for="Recommendation.Recommendation" class="form-control"></textarea>
+        </div>
+
+        <h3>Consejos Nutricionales</h3>
+        <div class="mb-3">
+            <label asp-for="NutritionalAdvice.Protein" class="form-label">Proteína</label>
+            <textarea asp-for="NutritionalAdvice.Protein" class="form-control"></textarea>
+        </div>
+        <div class="mb-3">
+            <label asp-for="NutritionalAdvice.Carbohidratos" class="form-label">Carbohidratos</label>
+            <textarea asp-for="NutritionalAdvice.Carbohidratos" class="form-control"></textarea>
+        </div>
+        <div class="mb-3">
+            <label asp-for="NutritionalAdvice.Fat" class="form-label">Grasas</label>
+            <textarea asp-for="NutritionalAdvice.Fat" class="form-control"></textarea>
+        </div>
+        <div class="mb-3">
+            <label asp-for="NutritionalAdvice.Hydration" class="form-label">Hidratación</label>
+            <textarea asp-for="NutritionalAdvice.Hydration" class="form-control"></textarea>
+        </div>
+        <div class="mb-3">
+            <label asp-for="NutritionalAdvice.Supplements" class="form-label">Suplementos</label>
+            <textarea asp-for="NutritionalAdvice.Supplements" class="form-control"></textarea>
+        </div>
+
+        <h3>Precauciones</h3>
+        <div class="mb-3">
+            <label asp-for="Precautions.Precaution" class="form-label">Precauciones</label>
+            <textarea asp-for="Precautions.Precaution" class="form-control"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </form>
+
+</div>
+
+@section Scripts {
+    <script>
+        $('#addExercise').on('click', function (e) {
+            e.preventDefault();
+            let index = $('#exerciseTable tbody tr').length;
+            let newRow = `<tr>
+                                <td><input type="number" name="Exercises[${index}].DayNumber" class="form-control" /></td>
+                                <td><input type="text" name="Exercises[${index}].ExerciseIdentifier" class="form-control" /></td>
+                                <td><input type="text" name="Exercises[${index}].ExerciseSubIdentifier" class="form-control" /></td>
+                                <td><input type="number" name="Exercises[${index}].Duration" class="form-control" /></td>
+                                <td><input type="number" name="Exercises[${index}].Repetitions" class="form-control" /></td>
+                                <td><input type="number" name="Exercises[${index}].Sets" class="form-control" /></td>
+                                <td><input type="text" name="Exercises[${index}].WeightPercentage" class="form-control" /></td>
+                                <td><button type="button" class="btn btn-danger removeExercise">Quitar</button></td>
+                            </tr>`;
+            $('#exerciseTable tbody').append(newRow);
+        });
+
+        $(document).on('click', '.removeExercise', function () {
+            $(this).closest('tr').remove();
+        });
+    </script>
+}

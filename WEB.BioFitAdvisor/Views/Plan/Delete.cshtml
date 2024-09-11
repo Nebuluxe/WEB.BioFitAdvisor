@@ -1,0 +1,19 @@
+﻿@using System.Text.Json
+@using API.BioFitAdvisor.Domain
+@model Plan
+
+@{
+    ViewData["Title"] = "Eliminar Plan";
+}
+
+<h4 class="header-view">@ViewData["Title"]</h4>
+
+<div class="container-section">
+    <h3>¿Estás seguro de que quieres eliminar el plan @Model.Name?</h3>
+
+    <form asp-action="DeleteConfirmed" method="post">
+        <input type="hidden" asp-for="PlanId" />
+        <button type="submit" class="btn btn-danger">Eliminar</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>

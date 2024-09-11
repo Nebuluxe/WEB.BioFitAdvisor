@@ -7,42 +7,42 @@ using System.Threading.Tasks;
 
 namespace WEB.BioFitAdvisor.Controllers
 {
-    public class ExerciseController : Controller
+    public class PlanController : Controller
     {
         private readonly ApiConsumer _apiConsumer;
         private readonly UserDataManipulator _userDataManipulator;
 
-        public ExerciseController(ApiConsumer apiConsumer, UserDataManipulator userDataManipulator)
+        public PlanController(ApiConsumer apiConsumer, UserDataManipulator userDataManipulator)
         {
             _apiConsumer = apiConsumer;
             _userDataManipulator = userDataManipulator;
         }
 
+        // Vista principal para listar planes
         public async Task<IActionResult> Index()
         {
             var userData = _userDataManipulator.GetUserData();
-
             if (userData == null)
             {
                 return RedirectToAction("Login", "Account");
             }
 
-            var apiResponse = await _apiConsumer.GET("/api/ExerciseLibrary/GetAllExercises", userData.Token);
+            var apiResponse = await _apiConsumer.GET("/api/TrainingPlan/GetAllPlans", userData.Token);
             if (apiResponse.success)
             {
-                var exercises = JsonConvert.DeserializeObject<IEnumerable<ExerciseLibrary>>(apiResponse.response);
-                return View(exercises);
+                var plans = JsonConvert.DeserializeObject<IEnumerable<Plan>>(apiResponse.response);
+                return View(plans);
             }
             else
             {
-                return View(new List<ExerciseLibrary>());
+                return View(new List<Plan>());
             }
         }
 
+        // Vista para crear o editar un plan
         public async Task<IActionResult> CreateOrEdit(int id = 0)
         {
             var userData = _userDataManipulator.GetUserData();
-
             if (userData == null)
             {
                 return RedirectToAction("Login", "Account");
@@ -50,15 +50,15 @@ namespace WEB.BioFitAdvisor.Controllers
 
             if (id == 0)
             {
-                return View(new ExerciseLibrary());
+                return View(new Plan());
             }
             else
             {
-                var apiResponse = await _apiConsumer.GET($"/api/ExerciseLibrary/GetExerciseById?exerciseId={id}", userData.Token);
+                var apiResponse = await _apiConsumer.GET($"/api/TrainingPlan/GetPlanById?planId={id}", userData.Token);
                 if (apiResponse.success)
                 {
-                    var exercise = JsonConvert.DeserializeObject<ExerciseLibrary>(apiResponse.response);
-                    return View(exercise);
+                    var plan = JsonConvert.DeserializeObject<Plan>(apiResponse.response);
+                    return View(plan);
                 }
                 else
                 {
@@ -67,12 +67,12 @@ namespace WEB.BioFitAdvisor.Controllers
             }
         }
 
+        // Acción POST para manejar la creación/edición de Plan
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateOrEdit(ExerciseLibrary exercise)
+        public async Task<IActionResult> CreateOrEdit(Plan plan)
         {
             var userData = _userDataManipulator.GetUserData();
-
             if (userData == null)
             {
                 return RedirectToAction("Login", "Account");
@@ -80,36 +80,34 @@ namespace WEB.BioFitAdvisor.Controllers
 
             if (ModelState.IsValid)
             {
-                string jsonExercise = JsonConvert.SerializeObject(exercise);
-                var apiResponse = await _apiConsumer.POST("/api/ExerciseLibrary/UpsertExercise", userData.Token, jsonExercise);
+                string jsonPlan = JsonConvert.SerializeObject(plan);
+                var apiResponse = await _apiConsumer.POST("/api/TrainingPlan/UpsertPlan", userData.Token, jsonPlan);
                 if (apiResponse.success)
                 {
-                    // Redirigir a la ventana Details después de crear o editar el ejercicio
-                    return RedirectToAction(nameof(Index), new { id = exercise.ExerciseId });
+                    return RedirectToAction(nameof(Details), new { id = plan.PlanId });
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Error al guardar el ejercicio.");
+                    ModelState.AddModelError("", "Error al guardar el plan.");
                 }
             }
-            return View(exercise);
+            return View(plan);
         }
 
-        // Acción para mostrar los detalles del ejercicio
+        // Vista para ver los detalles de un plan
         public async Task<IActionResult> Details(int id)
         {
             var userData = _userDataManipulator.GetUserData();
-
             if (userData == null)
             {
                 return RedirectToAction("Login", "Account");
             }
 
-            var apiResponse = await _apiConsumer.GET($"/api/ExerciseLibrary/GetExerciseById?exerciseId={id}", userData.Token);
+            var apiResponse = await _apiConsumer.GET($"/api/TrainingPlan/GetPlanById?planId={id}", userData.Token);
             if (apiResponse.success)
             {
-                var exercise = JsonConvert.DeserializeObject<ExerciseLibrary>(apiResponse.response);
-                return View(exercise);
+                var plan = JsonConvert.DeserializeObject<Plan>(apiResponse.response);
+                return View(plan);
             }
             else
             {
@@ -117,20 +115,20 @@ namespace WEB.BioFitAdvisor.Controllers
             }
         }
 
+        // Vista para eliminar un plan
         public async Task<IActionResult> Delete(int id)
         {
             var userData = _userDataManipulator.GetUserData();
-
             if (userData == null)
             {
                 return RedirectToAction("Login", "Account");
             }
 
-            var apiResponse = await _apiConsumer.GET($"/api/ExerciseLibrary/GetExerciseById?exerciseId={id}", userData.Token);
+            var apiResponse = await _apiConsumer.GET($"/api/TrainingPlan/GetPlanById?planId={id}", userData.Token);
             if (apiResponse.success)
             {
-                var exercise = JsonConvert.DeserializeObject<ExerciseLibrary>(apiResponse.response);
-                return View(exercise);
+                var plan = JsonConvert.DeserializeObject<Plan>(apiResponse.response);
+                return View(plan);
             }
             else
             {
@@ -138,18 +136,18 @@ namespace WEB.BioFitAdvisor.Controllers
             }
         }
 
+        // Acción POST para confirmar la eliminación
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var userData = _userDataManipulator.GetUserData();
-
             if (userData == null)
             {
                 return RedirectToAction("Login", "Account");
             }
 
-            var apiResponse = await _apiConsumer.DELETE($"/api/ExerciseLibrary/DeleteExercise?exerciseId={id}", userData.Token);
+            var apiResponse = await _apiConsumer.DELETE($"/api/TrainingPlan/DeletePlan?planId={id}", userData.Token);
             if (apiResponse.success)
             {
                 return RedirectToAction(nameof(Index));

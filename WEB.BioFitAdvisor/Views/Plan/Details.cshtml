@@ -1,0 +1,68 @@
+﻿@using System.Text.Json
+@using API.BioFitAdvisor.Domain
+@model Plan
+
+@{
+    ViewData["Title"] = "Detalles del Plan";
+}
+
+<h4 class="header-view">@Model.Name</h4>
+
+<div class="container-section">
+    <p><strong>Descripción:</strong> @Model.Description</p>
+    <p><strong>Número de semanas:</strong> @Model.NumberOfWeeks</p>
+    <p><strong>Estado:</strong> @(Model.Status ? "Activo" : "Inactivo")</p>
+
+    <h3>Ejercicios</h3>
+    @if (Model.Exercises?.Count > 0)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Día</th>
+                    <th>Ejercicio</th>
+                    <th>Subidentificador</th>
+                    <th>Duración (segundos)</th>
+                    <th>Repeticiones</th>
+                    <th>Series</th>
+                    <th>Porcentaje de Peso</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var exercise in Model.Exercises)
+                {
+                    <tr>
+                        <td>@exercise.DayNumber</td>
+                        <td>@exercise.ExerciseIdentifier</td>
+                        <td>@exercise.ExerciseSubIdentifier</td>
+                        <td>@exercise.Duration</td>
+                        <td>@exercise.Repetitions</td>
+                        <td>@exercise.Sets</td>
+                        <td>@exercise.WeightPercentage</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No hay ejercicios asignados.</p>
+    }
+
+    <h3>Recomendaciones de Descanso</h3>
+    <p>@Model.Recommendation.Recommendation</p>
+
+    <h3>Consejos Nutricionales</h3>
+    <p><strong>Proteína:</strong> @Model.NutritionalAdvice.Protein</p>
+    <p><strong>Carbohidratos:</strong> @Model.NutritionalAdvice.Carbohidratos</p>
+    <p><strong>Grasas:</strong> @Model.NutritionalAdvice.Fat</p>
+    <p><strong>Hidratación:</strong> @Model.NutritionalAdvice.Hydration</p>
+    <p><strong>Suplementos:</strong> @Model.NutritionalAdvice.Supplements</p>
+
+    <h3>Precauciones</h3>
+    <p>@Model.Precautions.Precaution</p>
+
+    <a asp-action="CreateOrEdit" asp-route-id="@Model.PlanId" class="btn btn-primary">Editar</a>
+    <a asp-action="Index" class="btn btn-secondary">Volver al listado</a>
+
+</div>
