@@ -201,7 +201,7 @@ $(function () {
         const worldMapOption = {
             color: purplePalette,
             title: {
-                text: 'Población Mundial por País',
+                text: 'Usuarios a Nivel Global',
                 textStyle: { color: '#FFFFFF' } // Título en blanco
             },
             visualMap: {

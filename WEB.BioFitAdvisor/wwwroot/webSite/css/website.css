@@ -1396,16 +1396,16 @@ hr {
 }
 
 .btn-primary {
-  color: #ffffff;
-  background-color: #3D58F3;
-  border-color: transparent !important;
+    color: #ffffff;
+    background-color: #7a3cf9;
+    border-color: transparent !important;
 }
 
-.btn-primary:hover {
-  color: #ffffff;
-  background-color: #1737f1;
-  box-shadow: 0 4px 12px rgba(61, 88, 243, 0.3);
-}
+    .btn-primary:hover {
+        color: #ffffff;
+        background-color: #7a3cf9;
+        box-shadow: 0 4px 12px rgba(61, 88, 243, 0.3);
+    }
 
 .btn-primary:focus {
   color: #ffffff;
@@ -2152,8 +2152,8 @@ hr {
 
 .page-section {
     position: relative;
-    padding-top: 100px;
-    padding-bottom: 100px;
+    padding-top: 200px;
+    padding-bottom: 200px;
 }
 
 .page-section:not(.fg-white) h1,
@@ -2164,10 +2164,10 @@ hr {
 
 
 .page-footer-section {
-  position: relative;
-  padding-top: 100px;
-  padding-bottom: 20px;
-  background-color: #F0EEF5;
+    position: relative;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: #181d1f;
 }
 
 .page-footer-section.bg-dark .caption {
